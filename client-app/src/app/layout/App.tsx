@@ -9,14 +9,7 @@ function App() {
   const [selectedActivity, setSelectedActivity] = useState<
     Activity | undefined
   >(undefined);
-
-  function handleSelectActivity(id: string) {
-    setSelectedActivity(activities.find((activity) => activity.id === id));
-  }
-
-  function cancelSelectedActivity() {
-    setSelectedActivity(undefined);
-  }
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     axios
@@ -27,6 +20,23 @@ function App() {
         setActivities(res.data);
       });
   }, []);
+
+  function handleSelectActivity(id: string) {
+    setSelectedActivity(activities.find((activity) => activity.id === id));
+  }
+
+  function handleCancelSelectActivity() {
+    setSelectedActivity(undefined);
+  }
+
+  function handleFormOpen(id?: string) {
+    id ? handleSelectActivity(id) : handleCancelSelectActivity();
+    setEditMode(true);
+  }
+
+  function handleFormClose() {
+    setEditMode(false);
+  }
 
   return (
     <div
@@ -39,7 +49,7 @@ function App() {
           activities={activities}
           selectedActivity={selectedActivity}
           selectActivity={handleSelectActivity}
-          cancelSelectActivity={cancelSelectedActivity}
+          cancelSelectActivity={handleCancelSelectActivity}
         />
       </ul>
     </div>
