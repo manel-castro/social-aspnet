@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from "react";
-interface NavBarProps {}
+interface NavBarProps {
+  openForm: () => void;
+}
 
-const NavBar: FunctionComponent<NavBarProps> = () => {
+const NavBar: FunctionComponent<NavBarProps> = ({ openForm }) => {
   return (
     <div style={{ display: "flex" }}>
       <div
@@ -26,6 +28,7 @@ const NavBar: FunctionComponent<NavBarProps> = () => {
         Activities
       </div>
       <div
+        onClick={openForm}
         style={{
           padding: 10,
           margin: 10,

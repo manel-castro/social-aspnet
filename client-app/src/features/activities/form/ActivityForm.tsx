@@ -1,12 +1,19 @@
 import React, { FunctionComponent } from "react";
-interface ActivityFormProps {}
+import { Activity } from "../../../app/models/activity";
+interface ActivityFormProps {
+  activity: Activity | undefined;
+  closeForm: () => void;
+}
 
-const ActivityForm: FunctionComponent<ActivityFormProps> = () => {
+const ActivityForm: FunctionComponent<ActivityFormProps> = ({
+  activity,
+  closeForm,
+}) => {
   return (
     <form
       style={{
         marginLeft: 20,
-        marginTop: 20,
+        // marginTop: 20,
         padding: 20,
         background: "white",
         boxShadow: "1px 1px 3px 2px rgba(135,135,135,0.82)",
@@ -23,7 +30,7 @@ const ActivityForm: FunctionComponent<ActivityFormProps> = () => {
       <Input placeholder="City" />
       <Input placeholder="Venue" />
       <button>Submit</button>
-      <button>Cancel</button>
+      <button onClick={closeForm}>Cancel</button>
     </form>
   );
 };

@@ -43,13 +43,16 @@ function App() {
       className="App"
       style={{ maxWidth: 1000, marginLeft: "auto", marginRight: "auto" }}
     >
-      <NavBar />
+      <NavBar openForm={handleFormOpen} />
       <ul>
         <ActivityDashboard
           activities={activities}
           selectedActivity={selectedActivity}
           selectActivity={handleSelectActivity}
           cancelSelectActivity={handleCancelSelectActivity}
+          editMode={editMode}
+          openForm={handleFormOpen}
+          closeForm={handleFormClose}
         />
       </ul>
     </div>

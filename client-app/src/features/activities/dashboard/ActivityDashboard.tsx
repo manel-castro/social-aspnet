@@ -8,6 +8,9 @@ interface ActivityDashboardProps {
   selectedActivity: Activity | undefined;
   selectActivity: (id: string) => void;
   cancelSelectActivity: () => void;
+  editMode: boolean;
+  openForm: (id: string) => void;
+  closeForm: () => void;
 }
 
 const ActivityDashboard: FunctionComponent<ActivityDashboardProps> = ({
@@ -15,19 +18,25 @@ const ActivityDashboard: FunctionComponent<ActivityDashboardProps> = ({
   selectedActivity,
   selectActivity,
   cancelSelectActivity,
+  editMode,
+  openForm,
+  closeForm,
 }) => {
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <ActivityList activities={activities} selectActivity={selectActivity} />
 
       <div>
-        {selectedActivity && (
+        {selectedActivity && !editMode && (
           <ActivityDetails
             activity={selectedActivity}
             cancelSelectActivity={cancelSelectActivity}
+            openForm={openForm}
           />
         )}
-        <ActivityForm />
+        {editMode && (
+          <ActivityForm closeForm={closeForm} activity={selectedActivity} />
+        )}
       </div>
     </div>
   );

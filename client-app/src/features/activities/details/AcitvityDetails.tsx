@@ -3,11 +3,13 @@ import { Activity } from "../../../app/models/activity";
 interface ActivityDetailsProps {
   activity: Activity;
   cancelSelectActivity: () => void;
+  openForm: (id: string) => void;
 }
 
 const ActivityDetails: FunctionComponent<ActivityDetailsProps> = ({
   activity,
   cancelSelectActivity,
+  openForm,
 }) => {
   return (
     <div
@@ -29,7 +31,7 @@ const ActivityDetails: FunctionComponent<ActivityDetailsProps> = ({
       <div>{activity.date}</div>
       <div>{activity.description}</div>
       <div>
-        <button>Edit</button>
+        <button onClick={() => openForm(activity.id)}>Edit</button>
         <button onClick={cancelSelectActivity}>Cancel</button>
       </div>
     </div>
