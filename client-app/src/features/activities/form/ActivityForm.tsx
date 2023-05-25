@@ -8,11 +8,13 @@ import { Activity } from "../../../app/models/activity";
 interface ActivityFormProps {
   activity: Activity | undefined;
   closeForm: () => void;
+  handleCreateOrEditActivity: (activity: Activity) => void;
 }
 
 const ActivityForm: FunctionComponent<ActivityFormProps> = ({
   activity: selectedActivity,
   closeForm,
+  handleCreateOrEditActivity,
 }) => {
   const initialState = selectedActivity ?? {
     id: "",
@@ -28,8 +30,7 @@ const ActivityForm: FunctionComponent<ActivityFormProps> = ({
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-
-    console.log(activity);
+    handleCreateOrEditActivity(activity);
   };
 
   const handleInputChange = (
