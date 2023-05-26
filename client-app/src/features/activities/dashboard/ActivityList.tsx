@@ -3,11 +3,13 @@ import { Activity } from "../../../app/models/activity";
 interface ActivityListProps {
   activities: Activity[];
   selectActivity: (id: string) => void;
+  deleteActivity: (id: string) => void;
 }
 
 const ActivityList: FunctionComponent<ActivityListProps> = ({
   activities,
   selectActivity,
+  deleteActivity,
 }) => {
   return (
     <div
@@ -38,7 +40,14 @@ const ActivityList: FunctionComponent<ActivityListProps> = ({
                 justifyContent: "space-between",
               }}
             >
-              <button onClick={() => selectActivity(activity.id)}>View</button>
+              <div>
+                <button onClick={() => selectActivity(activity.id)}>
+                  View
+                </button>
+                <button onClick={() => deleteActivity(activity.id)}>
+                  Delete
+                </button>
+              </div>
               <label
                 style={{
                   borderRadius: 5,
