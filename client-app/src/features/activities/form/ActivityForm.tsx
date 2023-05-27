@@ -76,6 +76,7 @@ const ActivityForm: FunctionComponent<ActivityFormProps> = ({
         placeholder="Date"
         value={activity.date}
         name="date"
+        type="date"
         onChange={handleInputChange}
       />
       <Input
