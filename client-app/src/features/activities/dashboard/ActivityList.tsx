@@ -1,15 +1,14 @@
 import React, { FunctionComponent, useState } from "react";
 import { Activity } from "../../../app/models/activity";
+import { useStore } from "../../../app/stores/store";
 interface ActivityListProps {
   activities: Activity[];
-  selectActivity: (id: string) => void;
   deleteActivity: (id: string) => void;
   submitting: boolean;
 }
 
 const ActivityList: FunctionComponent<ActivityListProps> = ({
   activities,
-  selectActivity,
   deleteActivity,
   submitting,
 }) => {
@@ -22,6 +21,8 @@ const ActivityList: FunctionComponent<ActivityListProps> = ({
     setTarget(e.currentTarget.name);
     deleteActivity(id);
   }
+
+  const { activityStore } = useStore();
 
   return (
     <div
@@ -53,7 +54,9 @@ const ActivityList: FunctionComponent<ActivityListProps> = ({
               }}
             >
               <div>
-                <button onClick={() => selectActivity(activity.id)}>
+                <button
+                  onClick={() => activityStore.selectActivity(activity.id)}
+                >
                   View
                 </button>
                 <button

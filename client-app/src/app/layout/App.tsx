@@ -25,23 +25,6 @@ function App() {
     activityStore.loadActivities();
   }, [activityStore]);
 
-  function handleSelectActivity(id: string) {
-    setSelectedActivity(activities.find((activity) => activity.id === id));
-  }
-
-  function handleCancelSelectActivity() {
-    setSelectedActivity(undefined);
-  }
-
-  function handleFormOpen(id?: string) {
-    id ? handleSelectActivity(id) : handleCancelSelectActivity();
-    setEditMode(true);
-  }
-
-  function handleFormClose() {
-    setEditMode(false);
-  }
-
   function handleCreateOrEditActivity(activity: Activity) {
     setSubmitting(true);
 
@@ -81,17 +64,12 @@ function App() {
       className="App"
       style={{ maxWidth: 1000, marginLeft: "auto", marginRight: "auto" }}
     >
-      <NavBar openForm={handleFormOpen} />
+      <NavBar />
 
       <ul>
         <ActivityDashboard
           activities={activityStore.activities}
-          selectedActivity={selectedActivity}
-          selectActivity={handleSelectActivity}
-          cancelSelectActivity={handleCancelSelectActivity}
           editMode={editMode}
-          openForm={handleFormOpen}
-          closeForm={handleFormClose}
           handleCreateOrEditActivity={handleCreateOrEditActivity}
           deleteActivity={handleDeleteActivity}
           submitting={submitting}

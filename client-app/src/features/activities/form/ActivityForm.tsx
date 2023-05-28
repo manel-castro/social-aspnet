@@ -5,19 +5,19 @@ import React, {
   useState,
 } from "react";
 import { Activity } from "../../../app/models/activity";
+import { useStore } from "../../../app/stores/store";
 interface ActivityFormProps {
-  activity: Activity | undefined;
-  closeForm: () => void;
   handleCreateOrEditActivity: (activity: Activity) => void;
   submitting: boolean;
 }
 
 const ActivityForm: FunctionComponent<ActivityFormProps> = ({
-  activity: selectedActivity,
-  closeForm,
   handleCreateOrEditActivity,
   submitting,
 }) => {
+  const { activityStore } = useStore();
+  const { closeForm, selectedActivity } = activityStore;
+
   const initialState = selectedActivity ?? {
     id: "",
     title: "",

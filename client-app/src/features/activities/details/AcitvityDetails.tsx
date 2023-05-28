@@ -1,16 +1,17 @@
-import React, { FunctionComponent } from "react";
-import { Activity } from "../../../app/models/activity";
-interface ActivityDetailsProps {
-  activity: Activity;
-  cancelSelectActivity: () => void;
-  openForm: (id: string) => void;
-}
+import { FunctionComponent } from "react";
+import { useStore } from "../../../app/stores/store";
 
-const ActivityDetails: FunctionComponent<ActivityDetailsProps> = ({
-  activity,
-  cancelSelectActivity,
-  openForm,
-}) => {
+const ActivityDetails: FunctionComponent = () => {
+  const { activityStore } = useStore();
+
+  const {
+    selectedActivity: activity,
+    openForm,
+    cancelSelectedActivity,
+  } = activityStore;
+
+  if (!activity) return <></>; // Only for removing errors since its being checked in parent component
+
   return (
     <div
       style={{
@@ -32,7 +33,7 @@ const ActivityDetails: FunctionComponent<ActivityDetailsProps> = ({
       <div>{activity.description}</div>
       <div>
         <button onClick={() => openForm(activity.id)}>Edit</button>
-        <button onClick={cancelSelectActivity}>Cancel</button>
+        <button onClick={cancelSelectedActivity}>Cancel</button>
       </div>
     </div>
   );

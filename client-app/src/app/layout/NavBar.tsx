@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from "react";
-interface NavBarProps {
-  openForm: () => void;
-}
+import { useStore } from "../stores/store";
+interface NavBarProps {}
 
-const NavBar: FunctionComponent<NavBarProps> = ({ openForm }) => {
+const NavBar: FunctionComponent<NavBarProps> = ({}) => {
+  const { activityStore } = useStore();
+
   return (
     <div style={{ display: "flex" }}>
       <div
@@ -28,7 +29,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({ openForm }) => {
         Activities
       </div>
       <div
-        onClick={openForm}
+        onClick={() => activityStore.openForm()}
         style={{
           padding: 10,
           margin: 10,
