@@ -9,12 +9,14 @@ interface ActivityFormProps {
   activity: Activity | undefined;
   closeForm: () => void;
   handleCreateOrEditActivity: (activity: Activity) => void;
+  submitting: boolean;
 }
 
 const ActivityForm: FunctionComponent<ActivityFormProps> = ({
   activity: selectedActivity,
   closeForm,
   handleCreateOrEditActivity,
+  submitting,
 }) => {
   const initialState = selectedActivity ?? {
     id: "",
@@ -91,7 +93,7 @@ const ActivityForm: FunctionComponent<ActivityFormProps> = ({
         name="venue"
         onChange={handleInputChange}
       />
-      <button>Submit</button>
+      <button disabled={submitting}>Submit</button>
       <button onClick={closeForm}>Cancel</button>
     </form>
   );

@@ -1,16 +1,28 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { Activity } from "../../../app/models/activity";
 interface ActivityListProps {
   activities: Activity[];
   selectActivity: (id: string) => void;
   deleteActivity: (id: string) => void;
+  submitting: boolean;
 }
 
 const ActivityList: FunctionComponent<ActivityListProps> = ({
   activities,
   selectActivity,
   deleteActivity,
+  submitting,
 }) => {
+  const [target, setTarget] = useState("");
+
+  function handleActivityDelete(
+    e: React.SyntheticEvent<HTMLButtonElement>,
+    id: string
+  ) {
+    setTarget(e.currentTarget.name);
+    deleteActivity(id);
+  }
+
   return (
     <div
       style={{
@@ -44,7 +56,11 @@ const ActivityList: FunctionComponent<ActivityListProps> = ({
                 <button onClick={() => selectActivity(activity.id)}>
                   View
                 </button>
-                <button onClick={() => deleteActivity(activity.id)}>
+                <button
+                  name={activity.id}
+                  disabled={submitting && target === activity.id}
+                  onClick={(e) => handleActivityDelete(e, activity.id)}
+                >
                   Delete
                 </button>
               </div>

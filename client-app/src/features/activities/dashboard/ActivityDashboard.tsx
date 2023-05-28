@@ -13,6 +13,7 @@ interface ActivityDashboardProps {
   closeForm: () => void;
   handleCreateOrEditActivity: (activity: Activity) => void;
   deleteActivity: (id: string) => void;
+  submitting: boolean;
 }
 
 const ActivityDashboard: FunctionComponent<ActivityDashboardProps> = ({
@@ -25,6 +26,7 @@ const ActivityDashboard: FunctionComponent<ActivityDashboardProps> = ({
   closeForm,
   handleCreateOrEditActivity,
   deleteActivity,
+  submitting,
 }) => {
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -32,6 +34,7 @@ const ActivityDashboard: FunctionComponent<ActivityDashboardProps> = ({
         activities={activities}
         selectActivity={selectActivity}
         deleteActivity={deleteActivity}
+        submitting={submitting}
       />
 
       <div>
@@ -47,6 +50,7 @@ const ActivityDashboard: FunctionComponent<ActivityDashboardProps> = ({
             closeForm={closeForm}
             activity={selectedActivity}
             handleCreateOrEditActivity={handleCreateOrEditActivity}
+            submitting={submitting}
           />
         )}
       </div>
