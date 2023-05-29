@@ -1,16 +1,23 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
+import { Link, useParams } from "react-router-dom";
 
 const ActivityDetails: FunctionComponent = () => {
   const { activityStore } = useStore();
 
   const {
     selectedActivity: activity,
-    openForm,
-    cancelSelectedActivity,
+    loadActivity,
+    loadingInitial,
   } = activityStore;
+  const { id } = useParams();
 
-  if (!activity) return <></>; // Only for removing errors since its being checked in parent component
+  useEffect(() => {
+    if (id) loadActivity(id);
+  }, [id, loadActivity]);
+
+  if (loadingInitial || !activity) return <>Loading...</>; // Only for removing errors since its being checked in parent component
 
   return (
     <div
@@ -32,11 +39,15 @@ const ActivityDetails: FunctionComponent = () => {
       <div>{activity.date}</div>
       <div>{activity.description}</div>
       <div>
-        <button onClick={() => openForm(activity.id)}>Edit</button>
-        <button onClick={cancelSelectedActivity}>Cancel</button>
+        <Link to={`/manage/${activity.id}`}>
+          <button>Edit</button>
+        </Link>
+        <Link to={`/activities`}>
+          <button>Cancel</button>
+        </Link>
       </div>
     </div>
   );
 };
 
-export default ActivityDetails;
+export default observer(ActivityDetails);

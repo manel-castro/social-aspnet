@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React, { FunctionComponent, useState } from "react";
 import { useStore } from "../../../app/stores/store";
+import { Link } from "react-router-dom";
 interface ActivityListProps {}
 
 const ActivityList: FunctionComponent<ActivityListProps> = ({}) => {
@@ -47,11 +48,9 @@ const ActivityList: FunctionComponent<ActivityListProps> = ({}) => {
               }}
             >
               <div>
-                <button
-                  onClick={() => activityStore.selectActivity(activity.id)}
-                >
-                  View
-                </button>
+                <Link to={`/activities/${activity.id}`}>
+                  <button>View</button>
+                </Link>
                 <button
                   name={activity.id}
                   disabled={loading && target === activity.id}

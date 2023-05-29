@@ -3,22 +3,29 @@ import {
   ChangeEvent,
   FormEventHandler,
   FunctionComponent,
+  useEffect,
   useState,
 } from "react";
 import { useStore } from "../../../app/stores/store";
+import { useParams } from "react-router-dom";
+import { Activity } from "../../../app/models/activity";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 interface ActivityFormProps {}
 
 const ActivityForm: FunctionComponent<ActivityFormProps> = ({}) => {
   const { activityStore } = useStore();
   const {
-    closeForm,
     selectedActivity,
     createActivity,
     updateActivity,
     loading,
+    loadActivity,
+    loadingInitial,
   } = activityStore;
 
-  const initialState = selectedActivity ?? {
+  const { id } = useParams();
+
+  const [activity, setActivity] = useState<Activity>({
     id: "",
     title: "",
     date: "",
@@ -26,9 +33,14 @@ const ActivityForm: FunctionComponent<ActivityFormProps> = ({}) => {
     category: "",
     city: "",
     venue: "",
-  };
+  });
 
-  const [activity, setActivity] = useState(initialState);
+  useEffect(() => {
+    if (id)
+      loadActivity(id)
+        .then((activity) => setActivity(activity!))
+        .catch((err) => console.log(err));
+  }, [id, loadActivity]);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -41,6 +53,8 @@ const ActivityForm: FunctionComponent<ActivityFormProps> = ({}) => {
     const { name, value } = event.target;
     setActivity({ ...activity, [name]: value });
   };
+
+  if (loadingInitial) return <LoadingComponent content="Loading activity..." />;
 
   return (
     <form
@@ -94,7 +108,7 @@ const ActivityForm: FunctionComponent<ActivityFormProps> = ({}) => {
         onChange={handleInputChange}
       />
       <button disabled={loading}>Submit</button>
-      <button onClick={closeForm}>Cancel</button>
+      <button>Cancel</button>
     </form>
   );
 };

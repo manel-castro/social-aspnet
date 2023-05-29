@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { useStore } from "../stores/store";
+import { NavLink } from "react-router-dom";
 interface NavBarProps {}
 
 const NavBar: FunctionComponent<NavBarProps> = ({}) => {
@@ -15,7 +16,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({}) => {
           borderRight: "1px solid grey",
         }}
       >
-        Reactivities
+        <NavLink to="/">Reactivities</NavLink>
       </div>
       <div
         style={{
@@ -26,10 +27,9 @@ const NavBar: FunctionComponent<NavBarProps> = ({}) => {
           borderRight: "1px solid grey",
         }}
       >
-        Activities
+        <NavLink to="/activities">Activities</NavLink>
       </div>
       <div
-        onClick={() => activityStore.openForm()}
         style={{
           padding: 10,
           margin: 10,
@@ -38,7 +38,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({}) => {
           color: "white",
         }}
       >
-        Create Activity
+        <NavLink to="/createActivity">Create Activity</NavLink>
       </div>
     </div>
   );

@@ -1,24 +1,25 @@
-import React, { FunctionComponent } from "react";
-import { Activity } from "../../../app/models/activity";
-import ActivityList from "./ActivityList";
-import ActivityDetails from "../details/AcitvityDetails";
-import ActivityForm from "../form/ActivityForm";
-import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { FunctionComponent, useEffect } from "react";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { useStore } from "../../../app/stores/store";
+import ActivityList from "./ActivityList";
 interface ActivityDashboardProps {}
 
 const ActivityDashboard: FunctionComponent<ActivityDashboardProps> = ({}) => {
   const { activityStore } = useStore();
 
-  const { selectedActivity, editMode } = activityStore;
+  useEffect(() => {
+    activityStore.loadActivities();
+  }, [activityStore]);
+
+  if (activityStore.loadingInitial) return <LoadingComponent />;
 
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <ActivityList />
 
       <div>
-        {selectedActivity && !editMode && <ActivityDetails />}
-        {editMode && <ActivityForm />}
+        <h2>Activity filters</h2>
       </div>
     </div>
   );

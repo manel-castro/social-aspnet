@@ -11,14 +11,6 @@ import { observer } from "mobx-react-lite";
 import { Outlet } from "react-router-dom";
 
 function App() {
-  const { activityStore } = useStore();
-
-  useEffect(() => {
-    activityStore.loadActivities();
-  }, [activityStore]);
-
-  if (activityStore.loadingInitial) return <LoadingComponent />;
-
   return (
     <div
       className="App"
