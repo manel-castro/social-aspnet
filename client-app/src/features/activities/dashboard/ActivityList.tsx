@@ -1,17 +1,12 @@
+import { observer } from "mobx-react-lite";
 import React, { FunctionComponent, useState } from "react";
-import { Activity } from "../../../app/models/activity";
 import { useStore } from "../../../app/stores/store";
-interface ActivityListProps {
-  activities: Activity[];
-  deleteActivity: (id: string) => void;
-  submitting: boolean;
-}
+interface ActivityListProps {}
 
-const ActivityList: FunctionComponent<ActivityListProps> = ({
-  activities,
-  deleteActivity,
-  submitting,
-}) => {
+const ActivityList: FunctionComponent<ActivityListProps> = ({}) => {
+  const { activityStore } = useStore();
+  const { deleteActivity, activities, loading } = activityStore;
+
   const [target, setTarget] = useState("");
 
   function handleActivityDelete(
@@ -21,8 +16,6 @@ const ActivityList: FunctionComponent<ActivityListProps> = ({
     setTarget(e.currentTarget.name);
     deleteActivity(id);
   }
-
-  const { activityStore } = useStore();
 
   return (
     <div
@@ -61,7 +54,7 @@ const ActivityList: FunctionComponent<ActivityListProps> = ({
                 </button>
                 <button
                   name={activity.id}
-                  disabled={submitting && target === activity.id}
+                  disabled={loading && target === activity.id}
                   onClick={(e) => handleActivityDelete(e, activity.id)}
                 >
                   Delete
@@ -86,4 +79,4 @@ const ActivityList: FunctionComponent<ActivityListProps> = ({
   );
 };
 
-export default ActivityList;
+export default observer(ActivityList);

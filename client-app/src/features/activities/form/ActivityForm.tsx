@@ -1,22 +1,22 @@
-import React, {
+import { observer } from "mobx-react-lite";
+import {
   ChangeEvent,
   FormEventHandler,
   FunctionComponent,
   useState,
 } from "react";
-import { Activity } from "../../../app/models/activity";
 import { useStore } from "../../../app/stores/store";
-interface ActivityFormProps {
-  handleCreateOrEditActivity: (activity: Activity) => void;
-  submitting: boolean;
-}
+interface ActivityFormProps {}
 
-const ActivityForm: FunctionComponent<ActivityFormProps> = ({
-  handleCreateOrEditActivity,
-  submitting,
-}) => {
+const ActivityForm: FunctionComponent<ActivityFormProps> = ({}) => {
   const { activityStore } = useStore();
-  const { closeForm, selectedActivity } = activityStore;
+  const {
+    closeForm,
+    selectedActivity,
+    createActivity,
+    updateActivity,
+    loading,
+  } = activityStore;
 
   const initialState = selectedActivity ?? {
     id: "",
@@ -32,7 +32,7 @@ const ActivityForm: FunctionComponent<ActivityFormProps> = ({
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    handleCreateOrEditActivity(activity);
+    activity.id ? updateActivity(activity) : createActivity(activity);
   };
 
   const handleInputChange = (
@@ -93,7 +93,7 @@ const ActivityForm: FunctionComponent<ActivityFormProps> = ({
         name="venue"
         onChange={handleInputChange}
       />
-      <button disabled={submitting}>Submit</button>
+      <button disabled={loading}>Submit</button>
       <button onClick={closeForm}>Cancel</button>
     </form>
   );
@@ -110,4 +110,4 @@ export const Input = ({ placeholder, ...rest }: any) => {
   );
 };
 
-export default ActivityForm;
+export default observer(ActivityForm);
