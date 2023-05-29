@@ -5,7 +5,7 @@ interface ActivityListProps {}
 
 const ActivityList: FunctionComponent<ActivityListProps> = ({}) => {
   const { activityStore } = useStore();
-  const { deleteActivity, activities, loading } = activityStore;
+  const { deleteActivity, activitiesByDate, loading } = activityStore;
 
   const [target, setTarget] = useState("");
 
@@ -28,7 +28,7 @@ const ActivityList: FunctionComponent<ActivityListProps> = ({}) => {
         paddingTop: 1,
       }}
     >
-      {activities.map((activity) => {
+      {activitiesByDate.map((activity) => {
         return (
           <div key={activity.id}>
             <h4 style={{ marginBottom: 5 }}>{activity.title}</h4>
