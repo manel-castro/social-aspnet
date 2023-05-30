@@ -7,9 +7,10 @@ import {
   useState,
 } from "react";
 import { useStore } from "../../../app/stores/store";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Activity } from "../../../app/models/activity";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { v4 as uuid } from "uuid";
 interface ActivityFormProps {}
 
 const ActivityForm: FunctionComponent<ActivityFormProps> = ({}) => {
@@ -24,6 +25,7 @@ const ActivityForm: FunctionComponent<ActivityFormProps> = ({}) => {
   } = activityStore;
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [activity, setActivity] = useState<Activity>({
     id: "",
@@ -44,7 +46,16 @@ const ActivityForm: FunctionComponent<ActivityFormProps> = ({}) => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    activity.id ? updateActivity(activity) : createActivity(activity);
+    if (!activity.id) {
+      activity.id = uuid();
+      createActivity(activity).then(() =>
+        navigate(`/activities/${activity.id}`)
+      );
+    } else {
+      updateActivity(activity).then(() =>
+        navigate(`/activities/${activity.id}`)
+      );
+    }
   };
 
   const handleInputChange = (

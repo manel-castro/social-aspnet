@@ -7,10 +7,11 @@ interface ActivityDashboardProps {}
 
 const ActivityDashboard: FunctionComponent<ActivityDashboardProps> = ({}) => {
   const { activityStore } = useStore();
+  const { loadActivities, activityRegistry } = activityStore;
 
   useEffect(() => {
-    activityStore.loadActivities();
-  }, [activityStore]);
+    if (activityRegistry.size === 0) loadActivities();
+  }, [loadActivities]);
 
   if (activityStore.loadingInitial) return <LoadingComponent />;
 
